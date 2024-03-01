@@ -42,7 +42,7 @@ export default function Payment() {
         { shippingAddress: values },
         {
           headers: { token: localStorage.getItem("token") },
-          params: { url: "https://Omran950.github.io/react-e-commerce" },
+          params: { url: "https://Omran950.github.io/e-commerce" },
         }
       )
       .then((res) => {
