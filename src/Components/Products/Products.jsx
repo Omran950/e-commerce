@@ -3,10 +3,11 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "./../Loader/Loader";
 import ChildProducts from "./../ChildProducts/ChildProduct";
-import BadConnection from "../BadConnection/BadConnection";
 
 export default function Products() {
   // const [allProducts, setallProducts] = useState(null);
+
+  const [wishHeart, setwishHeart] = useState(false);
 
   function getAllProducts() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/products", {});
@@ -35,14 +36,6 @@ export default function Products() {
     );
   }
 
-  if (isError || error) {
-    return (
-      <>
-        <BadConnection />
-      </>
-    );
-  }
-
   return (
     <>
       <div className="container  py-5">
@@ -50,7 +43,7 @@ export default function Products() {
           {data.data.data.map((product) => {
             return (
               <div key={product.id} className="col-md-3">
-                <ChildProducts product={product} />
+                <ChildProducts product={product} wishHeart={wishHeart} />
               </div>
             );
           })}

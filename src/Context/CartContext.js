@@ -8,7 +8,7 @@ export default function CartContextProvider({ children }) {
   const token = useContext(authContext);
   const [numOfCartItems, setnumOfCartItems] = useState(0);
   const [totalCartPrice, settotalCartPrice] = useState(0);
-  const [allProducts, setallProducts] = useState(null);
+  const [allProducts, setallProducts] = useState([]);
   const [cartId, setcartId] = useState(null);
 
   // Get user cart when signin
@@ -22,13 +22,14 @@ export default function CartContextProvider({ children }) {
         setallProducts(res.data.data.products);
         setnumOfCartItems(res.data.numOfCartItems);
         settotalCartPrice(res.data.data.totalCartPrice);
-        localStorage.setItem('userId', res.data.data.cartOwner);
+        // localStorage.setItem("userId", res.data.data.cartOwner);
       })
       .catch((err) => {
         // If cart is empty ... reset all data after payment
-        setallProducts([]);
-        setnumOfCartItems(0);
-        settotalCartPrice(0);
+        // setallProducts([]);
+        // setnumOfCartItems(0);
+        // settotalCartPrice(0);
+        console.log("cart empty");
       });
   }
 

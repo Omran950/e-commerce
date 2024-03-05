@@ -26,7 +26,6 @@ export default function WishListContextProvider({ children }) {
   }
 
   function addProductToWishList(id) {
-    
     axios
       .post(
         "https://ecommerce.routemisr.com/api/v1/wishlist",

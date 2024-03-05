@@ -132,11 +132,18 @@ export default function NavBar() {
                 </ul>
               </li>
               {token ? (
-                <li className="nav-item">
-                  <span role="button" className="nav-link" onClick={logOut}>
-                    SignOut
-                  </span>
-                </li>
+                <>
+                  <li className="nav-item me-2">
+                    <Link className="nav-link" to="/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <span role="button" className="nav-link" onClick={logOut}>
+                      SignOut
+                    </span>
+                  </li>
+                </>
               ) : (
                 <>
                   <li className="nav-item me-2">

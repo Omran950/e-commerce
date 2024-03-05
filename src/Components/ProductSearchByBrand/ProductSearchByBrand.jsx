@@ -3,12 +3,12 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../Loader/Loader";
 import ChildProducts from "../ChildProducts/ChildProduct";
-import BadConnection from "../BadConnection/BadConnection";
 import { useParams } from "react-router-dom";
 import noProducts from "../../images/no-products.jpg";
+import { Helmet } from "react-helmet";
 
 export default function ProductSearchByBrand() {
-  const { id } = useParams();
+  const { id, brandName } = useParams();
 
   function getAllProductsByBrand() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/products", {
@@ -31,8 +31,11 @@ export default function ProductSearchByBrand() {
   if (data.data.results === 0) {
     return (
       <>
+        <Helmet>
+          <title>{brandName} Products</title>
+        </Helmet>
         <div className="container py-5 my-5">
-        <figure>
+          <figure>
             <img
               src={noProducts}
               alt="No products available"
@@ -44,16 +47,11 @@ export default function ProductSearchByBrand() {
     );
   }
 
-  if (isError || error) {
-    return (
-      <>
-        <BadConnection />
-      </>
-    );
-  }
-
   return (
     <>
+      <Helmet>
+        <title>{brandName} Products</title>
+      </Helmet>
       <div className="container  py-5">
         <div className="row gy-4 gx-2 py-5 justify-content-center">
           {data.data.data.map((product) => {

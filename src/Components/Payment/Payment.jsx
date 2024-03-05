@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { cartContext } from "./../../Context/CartContext";
 import { toast } from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 export default function Payment() {
   const userData = {
@@ -42,7 +43,8 @@ export default function Payment() {
         { shippingAddress: values },
         {
           headers: { token: localStorage.getItem("token") },
-          params: { url: "https://Omran950.github.io/react-e-commerce" },
+          // params: { url: "https://Omran950.github.io/e-commerce" },
+          params: { url: "http://localhost:3000" },
         }
       )
       .then((res) => {
@@ -105,6 +107,9 @@ export default function Payment() {
 
   return (
     <>
+      <Helmet>
+        <title>Payment</title>
+      </Helmet>
       <div className=" m-auto py-5 my-5">
         <div className="py-5 my-5">
           <div className="w-75 m-auto shadow-lg p-3 rounded-3 bg-main-light">

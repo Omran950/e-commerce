@@ -1,5 +1,5 @@
 import React from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import AuthContextProvider from "./Context/AuthContext";
 import CartContextProvider from "./Context/CartContext";
@@ -13,16 +13,17 @@ import Cart from "./Components/Cart/Cart";
 import Brands from "./Components/Brands/Brands";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
-import Products from "./Components/Products/Products";
 import { Toaster } from "react-hot-toast";
 import Payment from "./Components/Payment/Payment";
+import Profile from "./Components/Profile/Profile";
 import ProductSearchByBrand from "./Components/ProductSearchByBrand/ProductSearchByBrand";
 import ProductSearchByCategory from "./Components/ProductSearchByCategory/ProductSearchByCategory";
 import AllOrders from "./Components/AllOrders/AllOrders";
 import WishList from "./Components/WishList/WishList";
 import WishListContextProvider from "./Context/WishListContext";
+import { Offline } from "react-detect-offline";
 
-const myRouter = createBrowserRouter([
+const myRouter = createHashRouter([
   {
     path: "/",
     element: <Layout />,
@@ -79,6 +80,14 @@ const myRouter = createBrowserRouter([
         ),
       },
       {
+        path: "profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "Productdetails/:id",
         element: (
           <ProtectedRoute>
@@ -87,9 +96,12 @@ const myRouter = createBrowserRouter([
         ),
       },
       { path: "brands", element: <Brands /> },
-      { path: "ProductSearchByBrand/:id", element: <ProductSearchByBrand /> },
       {
-        path: "productSearchByCategory/:id",
+        path: "ProductSearchByBrand/:id/:brandName",
+        element: <ProductSearchByBrand />,
+      },
+      {
+        path: "productSearchByCategory/:id/:categoryName",
         element: <ProductSearchByCategory />,
       },
       { path: "*", element: <NotFound /> },
@@ -104,13 +116,18 @@ export default function App() {
       <QueryClientProvider client={myClient}>
         <AuthContextProvider>
           <CartContextProvider>
-          <WishListContextProvider>
-            <RouterProvider router={myRouter} />
-          </WishListContextProvider>
+            <WishListContextProvider>
+              <RouterProvider router={myRouter} />
+            </WishListContextProvider>
           </CartContextProvider>
         </AuthContextProvider>
       </QueryClientProvider>
       <Toaster />
+      <Offline>
+        <div className="px-2 text-white fixed-bottom bg-dark text-center">
+          Bad Internet Connection
+        </div>
+      </Offline>
     </>
   );
 }

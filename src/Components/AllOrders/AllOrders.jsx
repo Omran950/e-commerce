@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "./../Loader/Loader";
 import { Link, useNavigate } from "react-router-dom";
+import { authContext } from "../../Context/AuthContext";
+import { Helmet } from "react-helmet";
 
 export default function AllOrders() {
-  const userId = localStorage.getItem("userId");
+  const { userId } = useContext(authContext);
   const [allOrders, setallOrders] = useState(null);
   const navigate = useNavigate();
 
@@ -32,6 +34,9 @@ export default function AllOrders() {
 
   return (
     <>
+      <Helmet>
+        <title>Orders</title>
+      </Helmet>
       {!allOrders || allOrders.length > 0 ? (
         <div className="container py-5 my-5">
           <div className="my-5">

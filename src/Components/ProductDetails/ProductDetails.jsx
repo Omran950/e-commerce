@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Loader from "./../Loader/Loader";
@@ -6,11 +6,15 @@ import { Navigate, useParams } from "react-router-dom";
 import { cartContext } from "../../Context/CartContext";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
+import { TailSpin } from "react-loader-spinner";
+import { Helmet } from "react-helmet";
 
 export default function ProductDetails() {
   const { addProductToCart } = useContext(cartContext);
+  const [loading, setloading] = useState(false);
 
   async function addProduct(id) {
+    setloading(true);
     const res = await addProductToCart(id);
     if (res) {
       toast.success("Product Adeed Successfully", {
@@ -18,12 +22,14 @@ export default function ProductDetails() {
         position: "top-right",
         style: { background: "#177448", color: "white" },
       });
+      setloading(false);
     } else {
       toast.error("Error Occurred", {
         duration: 1500,
         position: "top-right",
         style: { background: "#F8D7DA", color: "#58151C" },
       });
+      setloading(false);
     }
   }
 
@@ -72,6 +78,9 @@ export default function ProductDetails() {
 
   return (
     <>
+      <Helmet>
+        <title>{ProductDetail.title.split(" ").slice(0, 2).join(" ")}</title>
+      </Helmet>
       <div className="container py-5 my-5">
         <div className="row py-5 align-items-center gy-5">
           <div className="col-md-3">
@@ -145,8 +154,24 @@ export default function ProductDetails() {
               <button
                 className="btn-success text-white  btn w-100"
                 onClick={() => addProduct(id)}
+                disabled={loading}
               >
-                Add to carrt +
+                {loading ? (
+                  <div className="d-flex justify-content-center">
+                    <TailSpin
+                      visible={true}
+                      height="25"
+                      width="25"
+                      color="#fff"
+                      ariaLabel="tail-spin-loading"
+                      radius="1"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
+                  </div>
+                ) : (
+                  "Add to carrt +"
+                )}
               </button>
             </div>
           </div>

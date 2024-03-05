@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { cartContext } from "./../../Context/CartContext";
 import Loader from "./../Loader/Loader";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Cart() {
   const {
@@ -13,8 +15,13 @@ export default function Cart() {
     clearCart,
   } = useContext(cartContext);
   const navigate = useNavigate();
+  const [loadingBtn, setloadingBtn] = useState(false);
 
   async function updateProductCount(id, newCount) {
+    setloadingBtn(true);
+    setTimeout(() => {
+      setloadingBtn(false);
+    }, 1000);
     if (newCount <= 0) {
       newCount = 0;
     }
@@ -65,6 +72,9 @@ export default function Cart() {
 
   return (
     <>
+      <Helmet>
+        <title>User Cart</title>
+      </Helmet>
       {allProducts.length ? (
         <div className="py-5">
           <div className="container py-5 my-5  rounded-4">
@@ -117,6 +127,7 @@ export default function Cart() {
                   <div className="col-md-2">
                     <div className="d-flex align-items-center justify-content-center gap-2">
                       <button
+                        disabled={loadingBtn}
                         className="btn btn-outline-success py-1"
                         onClick={() => {
                           updateProductCount(
@@ -131,7 +142,7 @@ export default function Cart() {
                       <p className="m-0">{product.count}</p>
                       <button
                         className="btn btn-outline-success py-1"
-                        disabled={product.count === 1}
+                        disabled={product.count === 1 || loadingBtn}
                         onClick={() => {
                           updateProductCount(
                             product.product.id,

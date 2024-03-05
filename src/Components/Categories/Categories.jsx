@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Loader from "./../Loader/Loader";
-import BadConnection from "../BadConnection/BadConnection";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Categories() {
   function getAllCategories() {
@@ -23,22 +23,17 @@ export default function Categories() {
     );
   }
 
-  if (isError || error) {
-    return (
-      <>
-        <BadConnection />
-      </>
-    );
-  }
-
   return (
     <>
+      <Helmet>
+        <title>Categories</title>
+      </Helmet>
       <div className="container py-5 mt-5">
         <div className="row py-5 justify-content-center">
           {data.data.data.map((cat, idx) => {
             return (
               <div className="col-md-3" key={idx}>
-                <Link to={`/productSearchByCategory/${cat._id}`}>
+                <Link to={`/productSearchByCategory/${cat._id}/${cat.name}`}>
                   <figure className="rounded-3 overflow-hidden border-1 border-dark-subtle border product">
                     <img
                       src={cat.image}

@@ -5,6 +5,7 @@ import { TailSpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { authContext } from "./../../Context/AuthContext";
+import { Helmet } from "react-helmet";
 
 export default function Login() {
   const userData = {
@@ -17,7 +18,7 @@ export default function Login() {
   const [isLoading, setisLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { token, setToken } = useContext(authContext);
+  const { getUserData, setToken } = useContext(authContext);
 
   async function sendUserData(values) {
     await axios
@@ -26,6 +27,7 @@ export default function Login() {
         if (res.data.message === "success") {
           localStorage.setItem("token", res.data.token);
           setToken(res.data.token);
+          getUserData();
           setisSuccess(true);
           setTimeout(() => {
             setisSuccess(false);
@@ -88,6 +90,9 @@ export default function Login() {
 
   return (
     <>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <div className=" m-auto py-5 my-5">
         <div className="py-5 my-5">
           {isSuccess ? (

@@ -36,7 +36,7 @@ export default function CategorySlider() {
       <Slider {...settings}>
         {data.data.data.map((category, idx) => (
           <div key={idx}>
-              <Link to={`/productSearchByCategory/${category._id}`}>
+              <Link to={`/productSearchByCategory/${category._id}/${category.name}`}>
               <img
                 src={category.image}
                 alt={category.image}

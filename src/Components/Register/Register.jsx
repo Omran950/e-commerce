@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { TailSpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -147,6 +148,9 @@ export default function Register() {
 
   return (
     <>
+      <Helmet>
+        <title>Registeration</title>
+      </Helmet>
       <div className="w-75 m-auto py-5 my-5">
         {isSuccess ? (
           <div className="alert alert-success text-center">

@@ -3,12 +3,12 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loader from "../Loader/Loader";
 import ChildProducts from "../ChildProducts/ChildProduct";
-import BadConnection from "../BadConnection/BadConnection";
 import { useParams } from "react-router-dom";
 import noProducts from "../../images/no-products.jpg";
+import { Helmet } from "react-helmet";
 
 export default function ProductSearchByCategory() {
-  const { id } = useParams();
+  const { id, categoryName } = useParams();
 
   function getAllProductsByCategory() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/products", {
@@ -31,6 +31,9 @@ export default function ProductSearchByCategory() {
   if (data.data.results === 0) {
     return (
       <>
+        <Helmet>
+          <title>{categoryName} Products</title>
+        </Helmet>
         <div className="container py-5 my-5">
           <figure>
             <img
@@ -44,16 +47,11 @@ export default function ProductSearchByCategory() {
     );
   }
 
-  if (isError || error) {
-    return (
-      <>
-        <BadConnection />
-      </>
-    );
-  }
-
   return (
     <>
+      <Helmet>
+        <title>{categoryName} Products</title>
+      </Helmet>
       <div className="container  py-5">
         <div className="row gy-4 gx-2 py-5 justify-content-center">
           {data.data.data.map((product) => {
