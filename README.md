@@ -1,4 +1,6 @@
 FreshCart E-Commerce Web Application
+
+
 FreshCart is a feature-rich e-commerce web application designed for a seamless shopping experience. The platform includes a variety of functionalities to enhance user interaction and streamline the purchasing process.
 
 Key Features:
